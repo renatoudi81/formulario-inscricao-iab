@@ -15,17 +15,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .top-navy{background:var(--navy);padding:28px 32px 32px}
 .top-logos{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:20px}
 .top-logos .logo-iab{height:52px;width:auto;display:block;opacity:0.9}
-.top-logos .logo-divider{width:1px;height:32px;background:rgba(255,255,255,0.25);flex-shrink:0;margin:0 24px}
+.top-logos .logo-divider{width:1px;height:32px;background:rgba(255,255,255,0.4);flex-shrink:0;margin:0 24px}
 .top-logos .logo-inspira{height:52px;width:auto;display:block}
 .top-title{font-size:32px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-0.5px;margin-bottom:10px;text-align:center}
-.top-sub{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;max-width:380px;margin:0 auto;text-align:center}
+.top-sub{font-size:13px;color:rgba(255,255,255,0.92);line-height:1.6;max-width:380px;margin:0 auto;text-align:center}
 .yellow-bar{height:4px;background:var(--yellow)}
 
 .card{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
 .section{display:none;padding:0 0 24px}.section.active{display:block}
 .sec-header{background:var(--navy);padding:10px 28px;margin-bottom:20px}
-.sec-title{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.85)}
-.sec-desc{font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px;line-height:1.5}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#fff}
+.sec-desc{font-size:12px;color:rgba(255,255,255,0.92);margin-top:4px;line-height:1.5}
+.sec-header.destaque{padding:16px 28px 18px;border-left:5px solid var(--yellow)}
+.sec-header.destaque .sec-title{font-size:14px;letter-spacing:0.1em;color:#fff}
+.sec-header.destaque .sec-desc{font-size:13px;color:#fff;margin-top:8px;line-height:1.6}
+.sec-header.destaque .sec-desc strong{color:var(--yellow);font-weight:700}
 .fields{padding:0 28px}.field{margin-bottom:16px}.field:last-child{margin-bottom:0}
 label.lbl{display:block;font-size:12px;font-weight:600;letter-spacing:0.05em;color:var(--blue);text-transform:uppercase;margin-bottom:5px}
 label.lbl .req{color:var(--yellow)}
@@ -157,7 +161,7 @@ textarea{resize:vertical;min-height:80px}
       </div>
 
       <div class="section" id="sec2">
-        <div class="sec-header"><div class="sec-title">Programação da tarde — Núcleo temático</div><div class="sec-desc">Escolha apenas um núcleo. As Rodas de Conversa acontecerão simultaneamente. Após o envio não será possível trocar.</div></div>
+        <div class="sec-header destaque"><div class="sec-title">Programação da tarde — Núcleo temático</div><div class="sec-desc"><strong>Escolha apenas um núcleo.</strong> As Rodas de Conversa acontecerão simultaneamente. <strong>Após o envio não será possível trocar.</strong></div></div>
         <div class="fields">
           <div class="field" id="f-nucleo">
             <label class="lbl">Núcleo de participação <span class="req">*</span></label>

@@ -208,11 +208,11 @@ textarea{resize:vertical;min-height:80px}
         <p class="footer-note">Dúvidas: eventos@alfaebeto.org.br · <a href="https://wa.me/5511917322699" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">WhatsApp (11) 91732-2699</a></p>
       </div>
 
-      <div class="success" id="succ">
-        <div class="sicon"><svg width="26" height="26" fill="none" stroke="#1E88E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="stitle">Inscrição recebida!</div>
-        <p class="ssub">Ficamos felizes com o seu interesse em participar do Inspira Bom Jesus II.<br><br>Em breve nossa equipe entrará em contato para confirmar sua participação.<br><br>Dúvidas: <strong>eventos@alfaebeto.org.br</strong> · (11) 91732-2699</p>
-      </div>
+    </div>
+    <div class="success" id="succ">
+      <div class="sicon"><svg width="26" height="26" fill="none" stroke="#1E88E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="stitle">Inscrição recebida!</div>
+      <p class="ssub">Ficamos felizes com o seu interesse em participar do Inspira Bom Jesus II.<br><br>Em breve nossa equipe entrará em contato para confirmar sua participação.<br><br>Dúvidas: <strong>eventos@alfaebeto.org.br</strong> · (11) 91732-2699</p>
     </div>
   </div>
 </div>
@@ -387,6 +387,16 @@ async function submitForm(){
     else alert("Erro ao enviar. Verifique sua conexão e tente novamente.");
   }
 }
+</script>
+
+<script>
+function notifyHeight(){
+  var h = document.body.scrollHeight;
+  window.parent.postMessage({height: h}, '*');
+}
+var ro = new ResizeObserver(notifyHeight);
+ro.observe(document.body);
+notifyHeight();
 </script>
 </body>
 </html>

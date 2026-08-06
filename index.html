@@ -388,5 +388,15 @@ async function submitForm(){
   }
 }
 </script>
+
+<script>
+function notifyHeight(){
+  var h = document.body.scrollHeight;
+  window.parent.postMessage({height: h}, '*');
+}
+var ro = new ResizeObserver(notifyHeight);
+ro.observe(document.body);
+notifyHeight();
+</script>
 </body>
 </html>

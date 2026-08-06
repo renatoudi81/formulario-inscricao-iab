@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inscrição — Inspira Bom Jesus II</title>
+<title>Inscrição - Inspira Bom Jesus II</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#1B3A8C;--blue:#1565C0;--btn:#1E88E5;--btn-h:#1558A8;--yellow:#F5A623;--blue-light:#E8F0FC;--bg:#F2F5FA;--surface:#FFFFFF;--border:#D0DCF0;--muted:#6B7A99;--error:#C0392B;--radius:8px}
@@ -81,9 +81,11 @@ textarea{resize:vertical;min-height:80px}
 .timeout-msg{font-size:13px;color:var(--error);text-align:center;margin-top:12px;display:none;padding:0 28px}
 .footer-note{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;padding:0 28px}
 .info-box{background:var(--blue-light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--blue);line-height:1.5;margin-bottom:14px}
-.resumo-bloco{position:relative;padding-right:60px;margin-bottom:10px}
-.resumo-bloco:last-child{margin-bottom:0}
-.btn-edit{position:absolute;right:0;top:0;font-size:11px;font-weight:600;color:var(--btn);background:none;border:1px solid var(--btn);border-radius:100px;padding:3px 10px;cursor:pointer;transition:all .15s}
+.resumo-bloco{position:relative;padding:12px 70px 12px 0;border-bottom:1px solid rgba(21,101,192,0.15)}
+.resumo-bloco:first-child{padding-top:0}
+.resumo-bloco:first-child .btn-edit{top:0}
+.resumo-bloco:last-child{border-bottom:none;padding-bottom:0}
+.btn-edit{position:absolute;right:0;top:12px;font-size:11px;font-weight:600;color:var(--btn);background:#fff;border:1px solid var(--btn);border-radius:100px;padding:4px 12px;cursor:pointer;transition:all .15s;line-height:1}
 .btn-edit:hover{background:var(--btn);color:#fff}
 .char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}
 .hospede-divider{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);padding:10px 0 6px;border-bottom:2px solid var(--blue-light);margin-bottom:14px}
@@ -168,14 +170,14 @@ textarea{resize:vertical;min-height:80px}
       </div>
 
       <div class="section" id="sec2">
-        <div class="sec-header destaque"><div class="sec-title">Programação da tarde — Núcleo temático</div><div class="sec-desc"><strong>Escolha apenas um núcleo.</strong> As Rodas de Conversa acontecerão simultaneamente. <strong>Após o envio não será possível trocar.</strong></div></div>
+        <div class="sec-header destaque"><div class="sec-title">Programação da tarde: Núcleo temático</div><div class="sec-desc"><strong>Escolha apenas um núcleo.</strong> As Rodas de Conversa acontecerão simultaneamente. <strong>Após o envio não será possível trocar.</strong></div></div>
         <div class="fields">
           <div class="field" id="f-nucleo">
             <label class="lbl">Núcleo de participação <span class="req">*</span></label>
             <div class="nucleo-grid">
-              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n1" value="Núcleo 1 — Educação Infantil"><label for="n1"><span class="nucleo-title">Núcleo 1 — Educação Infantil</span><span class="nucleo-desc">Práticas pedagógicas da Educação Infantil, experiências exitosas, desafios da primeira infância e estratégias para qualificar o trabalho pedagógico.</span></label></div>
-              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n2" value="Núcleo 2 — Ciclo de Alfabetização e Anos Iniciais"><label for="n2"><span class="nucleo-title">Núcleo 2 — Ciclo de Alfabetização e Anos Iniciais</span><span class="nucleo-desc">Método fônico, ensino estruturado, uso do material didático, acompanhamento da aprendizagem e práticas exitosas da Rede Municipal de Bom Jesus.</span></label></div>
-              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n3" value="Núcleo 3 — Gestão Educacional"><label for="n3"><span class="nucleo-title">Núcleo 3 — Gestão Educacional</span><span class="nucleo-desc">Políticas públicas, gestão educacional, análise de resultados, tomada de decisões com base em evidências e estratégias para fortalecer a qualidade da educação.</span></label></div>
+              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n1" value="Núcleo 1: Educação Infantil"><label for="n1"><span class="nucleo-title">Núcleo 1: Educação Infantil</span><span class="nucleo-desc">Práticas pedagógicas da Educação Infantil, experiências exitosas, desafios da primeira infância e estratégias para qualificar o trabalho pedagógico.</span></label></div>
+              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n2" value="Núcleo 2: Ciclo de Alfabetização e Anos Iniciais"><label for="n2"><span class="nucleo-title">Núcleo 2: Ciclo de Alfabetização e Anos Iniciais</span><span class="nucleo-desc">Método fônico, ensino estruturado, uso do material didático, acompanhamento da aprendizagem e práticas exitosas da Rede Municipal de Bom Jesus.</span></label></div>
+              <div class="nucleo-opt"><input type="radio" name="nucleo" id="n3" value="Núcleo 3: Gestão Educacional"><label for="n3"><span class="nucleo-title">Núcleo 3: Gestão Educacional</span><span class="nucleo-desc">Políticas públicas, gestão educacional, análise de resultados, tomada de decisões com base em evidências e estratégias para fortalecer a qualidade da educação.</span></label></div>
             </div>
             <div class="err-msg" id="e-nucleo">Selecione um núcleo temático.</div>
           </div>
@@ -197,7 +199,7 @@ textarea{resize:vertical;min-height:80px}
             <div class="field" id="f-periodo"><label class="lbl">Período de hospedagem <span class="req">*</span></label><div class="radio-group"><div class="rpill"><input type="radio" name="periodo" id="per1" value="01 a 02 de setembro"><label for="per1">01 a 02 de setembro</label></div><div class="rpill"><input type="radio" name="periodo" id="per2" value="02 a 03 de setembro"><label for="per2">02 a 03 de setembro</label></div></div><div class="err-msg" id="e-periodo">Selecione o período.</div></div>
             <div class="field" id="f-quarto"><label class="lbl">Tipo de acomodação <span class="req">*</span></label><div class="info-box" style="font-size:11px">Nossa equipe entrará em contato para organizar a hospedagem conforme a disponibilidade.</div><div class="radio-group"><div class="rpill"><input type="radio" name="quarto" id="q1" value="Individual" onchange="onQuartoChange()"><label for="q1">Individual</label></div><div class="rpill"><input type="radio" name="quarto" id="q2" value="Duplo" onchange="onQuartoChange()"><label for="q2">Duplo</label></div><div class="rpill"><input type="radio" name="quarto" id="q3" value="Triplo" onchange="onQuartoChange()"><label for="q3">Triplo</label></div></div><div class="err-msg" id="e-quarto">Selecione o tipo de acomodação.</div></div>
             <div id="hosp2-wrap" style="display:none">
-              <div class="hospede-divider">Acompanhante — Hóspede 2</div>
+              <div class="hospede-divider">Acompanhante: Hóspede 2</div>
               <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
               <div class="field" id="f-h2nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h2nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
               <div class="field" id="f-h2cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h2cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
@@ -205,7 +207,7 @@ textarea{resize:vertical;min-height:80px}
               <div class="row2"><div class="field" id="f-h2email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h2email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h2tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h2tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
             </div>
             <div id="hosp3-wrap" style="display:none">
-              <div class="hospede-divider">Acompanhante — Hóspede 3</div>
+              <div class="hospede-divider">Acompanhante: Hóspede 3</div>
               <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
               <div class="field" id="f-h3nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h3nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
               <div class="field" id="f-h3cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h3cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
@@ -357,13 +359,13 @@ function next(sec){const valid=sec===1?val1():sec===2?val2():sec===3?val3():true
 function buildResumo(){
   const cargo=document.getElementById("cargo").value;
   const cargoFinal=cargo==="Outro"?"Outro: "+document.getElementById("outro-cargo").value.trim().toUpperCase():cargo;
-  const nucleo=document.querySelector("input[name='nucleo']:checked")?.value||"—";
+  const nucleo=document.querySelector("input[name='nucleo']:checked")?.value||"-";
   const hosp=document.querySelector("input[name='hosp']:checked")?.value||"Não";
-  const quarto=document.querySelector("input[name='quarto']:checked")?.value||"—";
-  const periodo=document.querySelector("input[name='periodo']:checked")?.value||"—";
+  const quarto=document.querySelector("input[name='quarto']:checked")?.value||"-";
+  const periodo=document.querySelector("input[name='periodo']:checked")?.value||"-";
   let h='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(1)">Editar</button><strong>'+document.getElementById("nome").value.trim().toUpperCase()+"</strong><br>"+cargoFinal+" · "+document.getElementById("inst").value.trim().toUpperCase()+"<br>"+document.getElementById("cidade").value+", "+document.getElementById("uf").value+"<br>"+document.getElementById("email").value.trim()+" · "+document.getElementById("tel").value+"</div>";
   h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(2)">Editar</button><strong>Núcleo:</strong> '+nucleo+"</div>";
-  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(3)">Editar</button><strong>Contato pós-evento:</strong> '+(document.querySelector("input[name=\'contato\']:checked")?.value||"—")+"<br><strong>Hospedagem:</strong> "+hosp;
+  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(3)">Editar</button><strong>Contato pós-evento:</strong> '+(document.querySelector("input[name=\'contato\']:checked")?.value||"-")+"<br><strong>Hospedagem:</strong> "+hosp;
   if(hosp==="Sim")h+=" · "+quarto+" · "+periodo;
   h+="</div>";
   document.getElementById("resumo").innerHTML=h;

@@ -29,7 +29,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .fields{padding:0 28px}.field{margin-bottom:16px}.field:last-child{margin-bottom:0}
 label.lbl{display:block;font-size:12px;font-weight:600;letter-spacing:0.05em;color:var(--blue);text-transform:uppercase;margin-bottom:5px}
 label.lbl .req{color:var(--yellow)}
-input,select,textarea{width:100%;padding:10px 12px;font-family:inherit;font-size:14px;color:#1a1a2e;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
+input:not([type="checkbox"]):not([type="radio"]),select,textarea{width:100%;padding:10px 12px;font-family:inherit;font-size:14px;color:#1a1a2e;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
 input::placeholder,textarea::placeholder{color:var(--muted);font-size:13px;text-transform:none}
 input:focus,select:focus,textarea:focus{border-color:var(--btn);box-shadow:0 0 0 3px rgba(30,136,229,0.12);background:#fff}
 input.uppercase{text-transform:uppercase}
@@ -52,11 +52,16 @@ textarea{resize:vertical;min-height:80px}
 .nucleo-opt input:checked+label{background:var(--blue-light);border-color:var(--btn)}
 .nucleo-title{font-size:13px;font-weight:600;color:var(--navy)}.nucleo-desc{font-size:12px;color:var(--muted);line-height:1.4}
 .nucleo-opt input:checked+label .nucleo-title{color:var(--blue)}.nucleo-opt input:checked+label .nucleo-desc{color:var(--blue)}
-.check-opt{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s}
-.check-opt:has(input:checked){background:var(--blue-light);border-color:var(--btn)}
-.check-opt input[type="checkbox"]{width:18px;height:18px;min-width:18px;margin-top:1px;cursor:pointer;accent-color:var(--btn)}
+.check-opt{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s}
+.check-opt:has(input:checked),.check-opt.checked{background:var(--blue-light);border-color:var(--btn)}
+.check-opt input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;margin-top:1px;cursor:pointer;border:2px solid var(--border);border-radius:5px;background:#fff;position:relative;transition:all .2s ease;flex-shrink:0}
+.check-opt input[type="checkbox"]:hover{border-color:var(--btn)}
+.check-opt input[type="checkbox"]:checked{background:var(--btn);border-color:var(--btn);animation:checkpop .3s ease}
+.check-opt input[type="checkbox"]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);animation:checkmark .25s ease .05s forwards}
+@keyframes checkpop{0%{transform:scale(1)}40%{transform:scale(0.85)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes checkmark{from{transform:rotate(45deg) scale(0)}to{transform:rotate(45deg) scale(1)}}
 .check-opt label{font-size:13px;color:var(--muted);line-height:1.5;cursor:pointer}
-.check-opt:has(input:checked) label{color:var(--navy)}
+.check-opt:has(input:checked) label,.check-opt.checked label{color:var(--navy)}
 .progress-wrap{padding:14px 28px 0}
 .progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
 .progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
@@ -116,7 +121,7 @@ textarea{resize:vertical;min-height:80px}
       <div class="section active" id="sec1">
         <div class="sec-header"><div class="sec-title">Dados do participante</div><div class="sec-desc">Preencha seus dados para confirmar sua participação no evento.</div></div>
         <div class="fields">
-          <div class="field" id="f-nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="nome" class="uppercase" placeholder="Seu nome completo"><div class="err-msg">Informe seu nome completo (mínimo 2 palavras, sem números).</div></div>
+          <div class="field" id="f-nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="nome" class="uppercase" placeholder="Seu nome completo" autocomplete="name"><div class="err-msg">Informe seu nome completo (mínimo 2 palavras, sem números).</div></div>
           <div class="field" id="f-cargo">
             <label class="lbl">Cargo <span class="req">*</span></label>
             <select id="cargo" onchange="toggleOutroCargo()">
@@ -144,8 +149,8 @@ textarea{resize:vertical;min-height:80px}
           </div>
           <div class="field" id="f-inst"><label class="lbl">Instituição / Secretaria <span class="req">*</span></label><input type="text" id="inst" class="uppercase" placeholder="Nome da instituição ou secretaria"><div class="err-msg">Informe sua instituição.</div></div>
           <div class="row2">
-            <div class="field" id="f-email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="email" placeholder="seu@email.com"><div class="err-msg">Informe um e-mail válido.</div></div>
-            <div class="field" id="f-tel"><label class="lbl">Telefone / WhatsApp <span class="req">*</span></label><input type="tel" id="tel" placeholder="(00) 00000-0000"><div class="err-msg">Informe um número válido.</div></div>
+            <div class="field" id="f-email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="email" placeholder="seu@email.com" autocomplete="email" inputmode="email"><div class="err-msg">Informe um e-mail válido.</div></div>
+            <div class="field" id="f-tel"><label class="lbl">Telefone / WhatsApp <span class="req">*</span></label><input type="tel" id="tel" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric"><div class="err-msg">Informe um número válido.</div></div>
           </div>
         </div>
         <div class="nav-area"><button class="btn-next" onclick="next(1)">Próximo</button></div>
@@ -185,14 +190,14 @@ textarea{resize:vertical;min-height:80px}
               <div class="field" id="f-h2nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h2nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
               <div class="field" id="f-h2cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h2cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
               <div class="row2"><div class="field" id="f-h2mun"><label class="lbl">Município <span class="req">*</span></label><input type="text" id="h2mun" class="uppercase" placeholder="Município"><div class="err-msg">Informe o município.</div></div><div class="field" id="f-h2inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h2inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div></div>
-              <div class="row2"><div class="field" id="f-h2email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h2email" placeholder="email@exemplo.com"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h2tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h2tel" placeholder="(00) 00000-0000"><div class="err-msg">Informe o telefone.</div></div></div>
+              <div class="row2"><div class="field" id="f-h2email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h2email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h2tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h2tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
             </div>
             <div id="hosp3-wrap" style="display:none">
               <div class="hospede-divider">Acompanhante — Hóspede 3</div>
               <div class="field" id="f-h3nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h3nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
               <div class="field" id="f-h3cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h3cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
               <div class="row2"><div class="field" id="f-h3mun"><label class="lbl">Município <span class="req">*</span></label><input type="text" id="h3mun" class="uppercase" placeholder="Município"><div class="err-msg">Informe o município.</div></div><div class="field" id="f-h3inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h3inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div></div>
-              <div class="row2"><div class="field" id="f-h3email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h3email" placeholder="email@exemplo.com"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h3tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h3tel" placeholder="(00) 00000-0000"><div class="err-msg">Informe o telefone.</div></div></div>
+              <div class="row2"><div class="field" id="f-h3email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h3email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h3tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h3tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
             </div>
           </div>
         </div>
@@ -268,7 +273,12 @@ function toggleOutroCargo(){
 function onHospChange(){
   const v=document.querySelector("input[name='hosp']:checked")?.value;
   document.getElementById("hosp-detalhes").style.display=v==="Sim"?"block":"none";
-  if(v!=="Sim"){document.querySelectorAll("input[name='periodo'],input[name='quarto']").forEach(r=>r.checked=false);document.getElementById("hosp2-wrap").style.display="none";document.getElementById("hosp3-wrap").style.display="none";}
+  if(v!=="Sim"){
+    document.querySelectorAll("input[name='periodo'],input[name='quarto']").forEach(r=>r.checked=false);
+    ["h2nome","h2cargo","h2mun","h2inst","h2email","h2tel","h3nome","h3cargo","h3mun","h3inst","h3email","h3tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+    document.getElementById("hosp2-wrap").style.display="none";
+    document.getElementById("hosp3-wrap").style.display="none";
+  }
 }
 function onQuartoChange(){
   const v=document.querySelector("input[name='quarto']:checked")?.value;
@@ -342,6 +352,11 @@ function buildResumo(){
   if(hosp==="Sim")h+=" · "+quarto+" · "+periodo;
   document.getElementById("resumo").innerHTML=h;
 }
+
+document.getElementById("aceite").addEventListener("change",function(){
+  this.closest(".check-opt").classList.toggle("checked",this.checked);
+});
+
 async function submitForm(){
   if(submitting)return;
   const aceite=document.getElementById("aceite").checked;

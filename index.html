@@ -22,7 +22,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .yellow-bar{height:4px;background:var(--yellow)}
 
 .card{background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
-.section{display:none;padding:0 0 24px}.section.active{display:block}
+.section{display:none;padding:0 0 24px;animation:fadein .35s ease}
+.section.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .sec-header{background:var(--navy);padding:10px 28px;margin-bottom:20px}
 .sec-title{font-size:13px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--yellow)}
 .sec-desc{font-size:13px;color:var(--yellow);margin-top:5px;line-height:1.55}
@@ -67,6 +69,11 @@ textarea{resize:vertical;min-height:80px}
 .check-opt label{font-size:13px;color:var(--muted);line-height:1.5;cursor:pointer}
 .check-opt:has(input:checked) label,.check-opt.checked label{color:var(--navy)}
 .progress-wrap{padding:14px 28px 0}
+.prog-steps{display:flex;gap:6px;margin-top:8px}
+.prog-step{flex:1;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:100px;cursor:default;transition:all .15s;user-select:none}
+.prog-step.done{background:var(--blue-light);border-color:var(--btn);color:var(--blue);cursor:pointer}
+.prog-step.current{background:var(--navy);border-color:var(--navy);color:#fff}
+.prog-step.done:hover{background:var(--btn);color:#fff}
 .progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
 .progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:var(--yellow);border-radius:2px;transition:width .3s}
@@ -79,6 +86,11 @@ textarea{resize:vertical;min-height:80px}
 .timeout-msg{font-size:13px;color:var(--error);text-align:center;margin-top:12px;display:none;padding:0 28px}
 .footer-note{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;padding:0 28px}
 .info-box{background:var(--blue-light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--blue);line-height:1.5;margin-bottom:14px}
+.resumo-bloco{position:relative;padding-right:60px;margin-bottom:10px}
+.resumo-bloco:last-child{margin-bottom:0}
+.btn-edit{position:absolute;right:0;top:0;font-size:11px;font-weight:600;color:var(--btn);background:none;border:1px solid var(--btn);border-radius:100px;padding:3px 10px;cursor:pointer;transition:all .15s}
+.btn-edit:hover{background:var(--btn);color:#fff}
+.char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}
 .hospede-divider{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);padding:10px 0 6px;border-bottom:2px solid var(--blue-light);margin-bottom:14px}
 .dots{display:inline-flex;gap:4px;align-items:center}
 .dots span{width:5px;height:5px;background:#fff;border-radius:50%;animation:d 1.2s infinite}
@@ -120,6 +132,12 @@ textarea{resize:vertical;min-height:80px}
       <div class="progress-wrap">
         <div class="progress-info"><span id="prog-label">Seção 1 de 4</span><span id="prog-pct">25%</span></div>
         <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
+        <div class="prog-steps">
+          <div class="prog-step current" id="step1" onclick="stepClick(1)">1. Dados</div>
+          <div class="prog-step" id="step2" onclick="stepClick(2)">2. Núcleo</div>
+          <div class="prog-step" id="step3" onclick="stepClick(3)">3. Complementos</div>
+          <div class="prog-step" id="step4" onclick="stepClick(4)">4. Confirmação</div>
+        </div>
       </div>
 
       <div class="section active" id="sec1">
@@ -354,8 +372,11 @@ function buildResumo(){
   const hosp=document.querySelector("input[name='hosp']:checked")?.value||"Não";
   const quarto=document.querySelector("input[name='quarto']:checked")?.value||"—";
   const periodo=document.querySelector("input[name='periodo']:checked")?.value||"—";
-  let h="<strong>"+document.getElementById("nome").value.trim().toUpperCase()+"</strong><br>"+cargoFinal+" · "+document.getElementById("inst").value.trim().toUpperCase()+"<br>"+document.getElementById("cidade").value+", "+document.getElementById("uf").value+"<br>"+document.getElementById("email").value.trim()+" · "+document.getElementById("tel").value+"<br><br><strong>Núcleo:</strong> "+nucleo+"<br><strong>Contato pós-evento:</strong> "+(document.querySelector("input[name='contato']:checked")?.value||"—")+"<br><strong>Hospedagem:</strong> "+hosp;
+  let h='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(1)">Editar</button><strong>'+document.getElementById("nome").value.trim().toUpperCase()+"</strong><br>"+cargoFinal+" · "+document.getElementById("inst").value.trim().toUpperCase()+"<br>"+document.getElementById("cidade").value+", "+document.getElementById("uf").value+"<br>"+document.getElementById("email").value.trim()+" · "+document.getElementById("tel").value+"</div>";
+  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(2)">Editar</button><strong>Núcleo:</strong> '+nucleo+"</div>";
+  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(3)">Editar</button><strong>Contato pós-evento:</strong> '+(document.querySelector("input[name=\'contato\']:checked")?.value||"—")+"<br><strong>Hospedagem:</strong> "+hosp;
   if(hosp==="Sim")h+=" · "+quarto+" · "+periodo;
+  h+="</div>";
   document.getElementById("resumo").innerHTML=h;
 }
 
@@ -420,6 +441,102 @@ function notifyHeight(){
 var ro = new ResizeObserver(notifyHeight);
 ro.observe(document.body);
 notifyHeight();
+
+// ===== Persistência de dados (sessionStorage) =====
+const PERSIST_FIELDS=["nome","email","tel","inst","outro-cargo","h2nome","h2cargo","h2mun","h2inst","h2email","h2tel","h3nome","h3cargo","h3mun","h3inst","h3email","h3tel"];
+const PERSIST_SELECTS=["cargo","uf","cidade"];
+const PERSIST_RADIOS=["nucleo","contato","hosp","periodo","quarto"];
+
+function saveState(){
+  try{
+    const s={fields:{},selects:{},radios:{}};
+    PERSIST_FIELDS.forEach(id=>{const el=document.getElementById(id);if(el)s.fields[id]=el.value;});
+    PERSIST_SELECTS.forEach(id=>{const el=document.getElementById(id);if(el)s.selects[id]=el.value;});
+    PERSIST_RADIOS.forEach(n=>{const el=document.querySelector("input[name='"+n+"']:checked");if(el)s.radios[n]=el.value;});
+    sessionStorage.setItem("inspira_form",JSON.stringify(s));
+  }catch(e){}
+}
+
+async function restoreState(){
+  try{
+    const raw=sessionStorage.getItem("inspira_form");
+    if(!raw)return;
+    const s=JSON.parse(raw);
+    Object.entries(s.fields||{}).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v;});
+    if(s.selects?.cargo){document.getElementById("cargo").value=s.selects.cargo;toggleOutroCargo();}
+    if(s.selects?.uf){
+      document.getElementById("uf").value=s.selects.uf;
+      await loadCidades(s.selects.uf);
+      if(s.selects?.cidade)document.getElementById("cidade").value=s.selects.cidade;
+    }
+    Object.entries(s.radios||{}).forEach(([n,v])=>{
+      const el=document.querySelector("input[name='"+n+"'][value='"+v+"']");
+      if(el)el.checked=true;
+    });
+    if(s.radios?.hosp)onHospChange();
+    if(s.radios?.quarto)onQuartoChange();
+  }catch(e){}
+}
+
+document.addEventListener("input",function(e){
+  if(e.target.matches("input,select,textarea"))saveState();
+});
+document.addEventListener("change",function(e){
+  if(e.target.matches("input,select"))saveState();
+});
+restoreState();
+
+// ===== Validação em tempo real (blur) =====
+function attachBlur(id,fn){
+  const el=document.getElementById(id);
+  if(el)el.addEventListener("blur",fn);
+}
+attachBlur("nome",function(){
+  const v=this.value.trim();
+  setErr("nome",!(v.length>=3&&v.split(" ").filter(w=>w).length>=2&&!/\d/.test(v)));
+}.bind(document.getElementById("nome")));
+attachBlur("email",function(){
+  const v=document.getElementById("email").value.trim();
+  setErr("email",!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v));
+});
+attachBlur("tel",function(){
+  const v=document.getElementById("tel").value.replace(/\D/g,"");
+  setErr("tel",v.length<10);
+});
+attachBlur("inst",function(){
+  setErr("inst",!document.getElementById("inst").value.trim());
+});
+
+// ===== Steps clicáveis =====
+let maxReached=1;
+function updateSteps(sec){
+  if(sec>maxReached)maxReached=sec;
+  for(let i=1;i<=4;i++){
+    const st=document.getElementById("step"+i);
+    st.classList.remove("current","done");
+    if(i===sec)st.classList.add("current");
+    else if(i<maxReached||i<sec)st.classList.add("done");
+    else if(i<=maxReached&&i!==sec)st.classList.add("done");
+  }
+}
+function stepClick(sec){
+  const st=document.getElementById("step"+sec);
+  if(!st.classList.contains("done"))return;
+  goTo(sec);
+}
+const _goTo=goTo;
+goTo=function(sec){_goTo(sec);updateSteps(sec);};
+updateSteps(1);
+
+// Limpar storage após envio bem-sucedido
+const _submitForm=submitForm;
+submitForm=async function(){
+  await _submitForm();
+  if(document.getElementById("succ").style.display==="block"){
+    try{sessionStorage.removeItem("inspira_form");}catch(e){}
+  }
+};
+
 </script>
 </body>
 </html>

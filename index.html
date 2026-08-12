@@ -226,7 +226,7 @@ textarea{resize:vertical;min-height:80px}
           <div class="field" id="f-aceite" style="margin-top:16px"><div class="check-opt"><input type="checkbox" id="aceite"><label for="aceite">Declaro que as informações são verdadeiras e autorizo o uso dos meus dados para fins de organização do evento e comunicação institucional relacionada ao Inspira Bom Jesus II.</label></div><div class="err-msg" id="e-aceite">Você precisa aceitar os termos para concluir a inscrição.</div></div>
         </div>
         <div class="nav-area"><button class="btn-back" onclick="goTo(3)">Voltar</button><button class="btn-next" id="sbtn" onclick="submitForm()">Confirmar inscrição</button></div>
-        <div class="timeout-msg" id="timeout-msg">O servidor demorou para responder. Verifique sua conexão e tente novamente.</div>
+        <div class="timeout-msg" id="timeout-msg">O servidor está demorando. Sua inscrição pode ter sido registrada. Aguarde alguns instantes antes de tentar novamente.</div>
         <p class="footer-note">Dúvidas: eventos@alfaebeto.org.br · <a href="https://wa.me/5511917322699" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">WhatsApp (11) 91732-2699</a></p>
       </div>
 
@@ -412,7 +412,7 @@ async function submitForm(){
     "Hóspede 3 - Email":quarto==="Triplo"?document.getElementById("h3email").value.trim().toLowerCase():"",
     "Hóspede 3 - Telefone":quarto==="Triplo"?document.getElementById("h3tel").value.trim():"",
   };
-  const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),10000));
+  const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),30000));
   try{
     await Promise.race([fetch(WH,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),timeout]);
     document.getElementById("fc").style.display="none";document.getElementById("succ").style.display="block";

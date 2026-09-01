@@ -54,12 +54,12 @@ select:disabled{opacity:.4;cursor:not-allowed}
 .nps-item label:hover{border-color:var(--btn)}
 .nps-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
 .stars{display:flex;gap:8px;user-select:none}
-.gl-star-rating .gl-star-rating--stars{gap:4px}
-.gl-star-rating .gl-star-rating--stars svg{width:42px;height:42px}
+.gl-star-rating .gl-star-rating--stars{gap:6px}
+.gl-star-rating .gl-star-rating--stars svg{width:40px;height:40px}
 .gl-star-rating .gl-star-rating--stars>span{cursor:pointer}
 .gl-star-rating .gl-star-rating--stars svg polygon,.gl-star-rating .gl-star-rating--stars svg path{stroke:var(--border)}
 .gl-star-rating .gl-star-rating--stars .gl-active svg,.gl-star-rating .gl-star-rating--stars .gl-selected svg{fill:var(--yellow);stroke:var(--yellow)}
-.gl-star-rating--ltr .gl-star-rating--tooltip{font-size:13px;font-weight:700;color:var(--yellow);margin-top:6px}
+.gl-star-rating .gl-star-rating--tooltip{display:none!important}
 .star{color:var(--border);cursor:pointer;line-height:0;transition:color .12s,transform .12s;padding:2px}
 .star svg{width:40px;height:40px;display:block}
 .star:hover{transform:scale(1.12)}
@@ -88,6 +88,13 @@ select:disabled{opacity:.4;cursor:not-allowed}
   .top-title{font-size:24px}
   .nps-item label{height:34px;font-size:12px}
   .scale-item label{height:46px;font-size:16px}
+  .fields .field{margin-bottom:16px}
+  .sec-desc{font-size:12px}
+  .tema-opt label{min-height:44px;padding:11px 14px}
+  .tema-grid{gap:7px}
+  .gl-star-rating .gl-star-rating--stars svg{width:36px;height:36px}
+  .nps-grid{gap:4px}
+  .lbl{margin-bottom:6px}
 }
 </style>
 </head>
@@ -162,6 +169,7 @@ select:disabled{opacity:.4;cursor:not-allowed}
             <option value="4">Bom</option>
             <option value="5">Excelente</option>
           </select>
+          <div class="stars-cap" id="cap-nota"></div>
           <div class="err-msg" id="e-nota">Toque em uma estrela.</div>
         </div>
         <div class="field" id="f-nps">
@@ -271,8 +279,11 @@ var ro=new ResizeObserver(notifyHeight);ro.observe(document.body);notifyHeight()
 <script type="module">
   import StarRating from 'https://cdn.jsdelivr.net/npm/star-rating.js@4.3.1/dist/star-rating.esm.js';
   const sel=document.getElementById('nota-select');
-  new StarRating(sel,{tooltip:'Toque para avaliar'});
+  const cap=document.getElementById('cap-nota');
+  new StarRating(sel,{tooltip:false});
   sel.addEventListener('change',function(){
+    const t=sel.options[sel.selectedIndex];
+    cap.textContent=(sel.value&&t)?t.textContent:'';
     if(window.clearNotaErr)window.clearNotaErr();
     if(window.notifyHeight)window.notifyHeight();
   });

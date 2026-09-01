@@ -226,13 +226,12 @@ function validar(){
   return ok;
 }
 
-async function submitForm(){
+function submitForm(){
   if(submitting)return;
   if(!validar())return;
   submitting=true;
   const btn=document.getElementById("sbtn");
-  btn.disabled=true;btn.innerHTML='<span class="dots"><span></span><span></span><span></span></span>';
-  document.getElementById("timeout-msg").style.display="none";
+  btn.disabled=true;
   const funcao=document.getElementById("funcao").value;
   const funcaoFinal=funcao==="Outro"?"Outro: "+document.getElementById("outro-funcao").value.trim().toUpperCase():funcao;
   const payload={
@@ -244,16 +243,12 @@ async function submitForm(){
     "Avaliação geral (estrelas 1-5)":document.getElementById("nota-val").value,
     "Recomendação (0-10)":document.querySelector("input[name='nps']:checked")?.value||"",
   };
-  const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),30000));
-  try{
-    await Promise.race([fetch(WH,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),timeout]);
-    document.getElementById("fc").style.display="none";
-    document.getElementById("succ").style.display="block";
-  }catch(e){
-    submitting=false;btn.disabled=false;btn.textContent="Enviar avaliação";
-    if(e.message==="timeout")document.getElementById("timeout-msg").style.display="block";
-    else alert("Erro ao enviar. Verifique sua conexão e tente novamente.");
-  }
+  // dispara o envio em segundo plano e nao espera a resposta
+  try{fetch(WH,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});}catch(e){}
+  // mostra a confirmacao imediatamente
+  document.getElementById("fc").style.display="none";
+  document.getElementById("succ").style.display="block";
+  notifyHeight();
 }
 
 const CAPS_NOTA=["","Péssimo","Ruim","Regular","Bom","Excelente"];

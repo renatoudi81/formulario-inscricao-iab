@@ -52,6 +52,12 @@ select:disabled{opacity:.4;cursor:not-allowed}
 .nps-item input:checked+label{background:var(--btn);border-color:var(--btn);color:#fff}
 .nps-item label:hover{border-color:var(--btn)}
 .nps-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+.stars{display:flex;gap:8px;user-select:none}
+.star{color:var(--border);cursor:pointer;line-height:0;transition:color .12s,transform .12s;padding:2px}
+.star svg{width:40px;height:40px;display:block}
+.star:hover{transform:scale(1.12)}
+.star.on{color:var(--yellow)}
+.stars-cap{font-size:13px;font-weight:700;color:var(--yellow);margin-top:10px;min-height:18px}
 .nav-area{padding:20px 28px 24px}
 .btn-next{width:100%;padding:14px;background:var(--navy);color:#fff;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border:none;border-radius:var(--radius);cursor:pointer;transition:background .15s;position:relative;overflow:hidden}
 .btn-next::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--yellow)}
@@ -141,33 +147,17 @@ select:disabled{opacity:.4;cursor:not-allowed}
         </div>
         <div class="field" id="f-nota">
           <label class="lbl">Como você avalia o evento como um todo?</label>
-          <div class="scale">
-            <div class="scale-item"><input type="radio" name="nota" id="n1" value="1"><label for="n1">1</label></div>
-            <div class="scale-item"><input type="radio" name="nota" id="n2" value="2"><label for="n2">2</label></div>
-            <div class="scale-item"><input type="radio" name="nota" id="n3" value="3"><label for="n3">3</label></div>
-            <div class="scale-item"><input type="radio" name="nota" id="n4" value="4"><label for="n4">4</label></div>
-            <div class="scale-item"><input type="radio" name="nota" id="n5" value="5"><label for="n5">5</label></div>
-          </div>
-          <div class="scale-legend"><span>1 - Péssimo</span><span>5 - Excelente</span></div>
-          <div class="err-msg" id="e-nota">Selecione uma nota.</div>
+          <div class="stars" id="stars-nota" data-target="nota-val"></div>
+          <input type="hidden" id="nota-val" value="">
+          <div class="stars-cap" id="cap-nota"></div>
+          <div class="err-msg" id="e-nota">Toque em uma estrela.</div>
         </div>
         <div class="field" id="f-nps">
-          <label class="lbl">De 0 a 10, o quanto você recomendaria o II Inspira Bom Jesus a outros municípios?</label>
-          <div class="nps-grid">
-            <div class="nps-item"><input type="radio" name="nps" id="p0" value="0"><label for="p0">0</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p1" value="1"><label for="p1">1</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p2" value="2"><label for="p2">2</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p3" value="3"><label for="p3">3</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p4" value="4"><label for="p4">4</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p5" value="5"><label for="p5">5</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p6" value="6"><label for="p6">6</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p7" value="7"><label for="p7">7</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p8" value="8"><label for="p8">8</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p9" value="9"><label for="p9">9</label></div>
-            <div class="nps-item"><input type="radio" name="nps" id="p10" value="10"><label for="p10">10</label></div>
-          </div>
-          <div class="nps-legend"><span>0 - Não recomendaria</span><span>10 - Recomendaria muito</span></div>
-          <div class="err-msg" id="e-nps">Selecione uma nota.</div>
+          <label class="lbl">O quanto você recomendaria o II Inspira Bom Jesus a outros municípios?</label>
+          <div class="stars" id="stars-nps" data-target="nps-val"></div>
+          <input type="hidden" id="nps-val" value="">
+          <div class="stars-cap" id="cap-nps"></div>
+          <div class="err-msg" id="e-nps">Toque em uma estrela.</div>
         </div>
       </div>
       <div class="nav-area">
@@ -219,8 +209,8 @@ function validar(){
   if(!funcao){ff.classList.add("bad");ok=false;}else{ff.classList.remove("bad");}
   if(funcao==="Outro"&&!document.getElementById("outro-funcao").value.trim()){ff.classList.add("bad");ok=false;}
   const tema=document.querySelector("input[name='tema']:checked");setErr("tema",!tema);if(!tema)ok=false;
-  const nota=document.querySelector("input[name='nota']:checked");setErr("nota",!nota);if(!nota)ok=false;
-  const nps=document.querySelector("input[name='nps']:checked");setErr("nps",!nps);if(!nps)ok=false;
+  const nota=document.getElementById("nota-val").value;setErr("nota",!nota);if(!nota)ok=false;
+  const nps=document.getElementById("nps-val").value;setErr("nps",!nps);if(!nps)ok=false;
   if(!ok)scrollToFirstError();
   return ok;
 }
@@ -240,8 +230,8 @@ async function submitForm(){
     Município:document.getElementById("cidade").value,
     Função:funcaoFinal,
     "Atividade (Roda de Conversa)":document.querySelector("input[name='tema']:checked")?.value||"",
-    "Avaliação geral (1-5)":document.querySelector("input[name='nota']:checked")?.value||"",
-    "NPS (0-10)":document.querySelector("input[name='nps']:checked")?.value||"",
+    "Avaliação geral (estrelas 1-5)":document.getElementById("nota-val").value,
+    "Recomendação (estrelas 1-5)":document.getElementById("nps-val").value,
   };
   const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),30000));
   try{
@@ -254,6 +244,31 @@ async function submitForm(){
     else alert("Erro ao enviar. Verifique sua conexão e tente novamente.");
   }
 }
+
+const CAPS_NOTA=["","Péssimo","Ruim","Regular","Bom","Excelente"];
+const CAPS_NPS=["","Não recomendaria","Pouco provável","Talvez","Recomendaria","Recomendaria muito"];
+const STAR_SVG='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.6 5.9 6.4.55-4.85 4.2 1.45 6.25L12 20.15 6.35 19.5l1.45-6.25L2.95 9.05l6.4-.55z"/></svg>';
+function buildStars(containerId,capId,caps){
+  const c=document.getElementById(containerId);
+  const hid=document.getElementById(c.dataset.target);
+  const capEl=document.getElementById(capId);
+  for(let i=1;i<=5;i++){
+    const s=document.createElement("div");
+    s.className="star";s.dataset.val=i;s.innerHTML=STAR_SVG;
+    s.setAttribute("role","button");s.setAttribute("aria-label",i+(i>1?" estrelas":" estrela"));
+    c.appendChild(s);
+  }
+  const stars=c.querySelectorAll(".star");
+  function paint(n){stars.forEach(st=>st.classList.toggle("on",Number(st.dataset.val)<=n));}
+  function selected(){return Number(hid.value)||0;}
+  stars.forEach(st=>{
+    st.addEventListener("mouseenter",()=>paint(Number(st.dataset.val)));
+    st.addEventListener("click",()=>{const v=Number(st.dataset.val);hid.value=v;paint(v);capEl.textContent=caps[v];const f=c.closest(".field");if(f)f.classList.remove("bad");});
+  });
+  c.addEventListener("mouseleave",()=>paint(selected()));
+}
+buildStars("stars-nota","cap-nota",CAPS_NOTA);
+buildStars("stars-nps","cap-nps",CAPS_NPS);
 
 function notifyHeight(){window.parent.postMessage({height:document.body.scrollHeight},'*');}
 var ro=new ResizeObserver(notifyHeight);ro.observe(document.body);notifyHeight();

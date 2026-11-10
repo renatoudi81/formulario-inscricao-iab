@@ -196,7 +196,7 @@ textarea{resize:vertical;min-height:80px}
           </div>
           <div id="hosp-detalhes" style="display:none">
             <div class="field" id="f-periodo"><label class="lbl">Período de hospedagem <span class="req">*</span></label><div class="radio-group"><div class="rpill"><input type="radio" name="periodo" id="per1" value="10 a 11 de dezembro"><label for="per1">10 a 11 de dezembro</label></div><div class="rpill"><input type="radio" name="periodo" id="per2" value="11 a 12 de dezembro"><label for="per2">11 a 12 de dezembro</label></div></div><div class="err-msg" id="e-periodo">Selecione o período.</div></div>
-            <div class="field" id="f-quarto"><label class="lbl">Tipo de acomodação <span class="req">*</span></label><div class="info-box" style="font-size:11px">Você já é o 1º hóspede. Para quarto duplo ou triplo, preencha apenas os dados do 2º (e do 3º) hóspede. Nossa equipe entrará em contato para organizar a hospedagem conforme a disponibilidade.</div><div class="radio-group"><div class="rpill"><input type="radio" name="quarto" id="q1" value="Individual" onchange="onQuartoChange()"><label for="q1">Individual</label></div><div class="rpill"><input type="radio" name="quarto" id="q2" value="Duplo" onchange="onQuartoChange()"><label for="q2">Duplo</label></div><div class="rpill"><input type="radio" name="quarto" id="q3" value="Triplo" onchange="onQuartoChange()"><label for="q3">Triplo</label></div></div><div class="err-msg" id="e-quarto">Selecione o tipo de acomodação.</div></div>
+            <div class="field" id="f-quarto"><label class="lbl">Tipo de acomodação <span class="req">*</span></label><div class="info-box" style="font-size:11px">Você já é o 1º hóspede. Para quarto duplo, preencha apenas os dados do 2º hóspede. Nossa equipe entrará em contato para organizar a hospedagem conforme a disponibilidade.</div><div class="radio-group"><div class="rpill"><input type="radio" name="quarto" id="q1" value="Individual" onchange="onQuartoChange()"><label for="q1">Individual</label></div><div class="rpill"><input type="radio" name="quarto" id="q2" value="Duplo" onchange="onQuartoChange()"><label for="q2">Duplo</label></div></div><div class="err-msg" id="e-quarto">Selecione o tipo de acomodação.</div></div>
             <div id="hosp2-wrap" style="display:none">
               <div class="hospede-divider">Acompanhante: Hóspede 2</div>
               <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
@@ -205,14 +205,7 @@ textarea{resize:vertical;min-height:80px}
               <div class="row2"><div class="field" id="f-h2mun"><label class="lbl">Município <span class="req">*</span></label><input type="text" id="h2mun" class="uppercase" placeholder="Município"><div class="err-msg">Informe o município.</div></div><div class="field" id="f-h2inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h2inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div></div>
               <div class="row2"><div class="field" id="f-h2email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h2email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h2tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h2tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
             </div>
-            <div id="hosp3-wrap" style="display:none">
-              <div class="hospede-divider">Acompanhante: Hóspede 3</div>
-              <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
-              <div class="field" id="f-h3nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h3nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
-              <div class="field" id="f-h3cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h3cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
-              <div class="row2"><div class="field" id="f-h3mun"><label class="lbl">Município <span class="req">*</span></label><input type="text" id="h3mun" class="uppercase" placeholder="Município"><div class="err-msg">Informe o município.</div></div><div class="field" id="f-h3inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h3inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div></div>
-              <div class="row2"><div class="field" id="f-h3email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h3email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h3tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h3tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
-            </div>
+            
           </div>
         </div>
         <div class="nav-area"><button class="btn-back" onclick="goTo(2)">Voltar</button><button class="btn-next" onclick="next(3)">Próximo</button></div>
@@ -262,7 +255,7 @@ function maskTel(el){
   else if(v.length>2)v=v.replace(/^(\d{2})(\d*)$/,"($1) $2");
   el.value=v;
 }
-["tel","h2tel","h3tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("input",function(){maskTel(this)})});
+["tel","h2tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("input",function(){maskTel(this)})});
 document.getElementById("email").addEventListener("keydown",function(e){if(e.key===" ")e.preventDefault()});
 document.getElementById("email").addEventListener("paste",function(e){e.preventDefault();this.value=(e.clipboardData||window.clipboardData).getData("text").replace(/\s/g,"")});
 
@@ -289,15 +282,13 @@ function onHospChange(){
   document.getElementById("hosp-detalhes").style.display=v==="Sim"?"block":"none";
   if(v!=="Sim"){
     document.querySelectorAll("input[name='periodo'],input[name='quarto']").forEach(r=>r.checked=false);
-    ["h2nome","h2cargo","h2mun","h2inst","h2email","h2tel","h3nome","h3cargo","h3mun","h3inst","h3email","h3tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+    ["h2nome","h2cargo","h2mun","h2inst","h2email","h2tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
     document.getElementById("hosp2-wrap").style.display="none";
-    document.getElementById("hosp3-wrap").style.display="none";
   }
 }
 function onQuartoChange(){
   const v=document.querySelector("input[name='quarto']:checked")?.value;
-  document.getElementById("hosp2-wrap").style.display=(v==="Duplo"||v==="Triplo")?"block":"none";
-  document.getElementById("hosp3-wrap").style.display=v==="Triplo"?"block":"none";
+  document.getElementById("hosp2-wrap").style.display=v==="Duplo"?"block":"none";
 }
 function setErr(id,has){const el=document.getElementById("f-"+id);if(el)el.classList.toggle("bad",has);}
 function scrollToFirstError(){const el=document.querySelector(".bad");if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}
@@ -341,15 +332,10 @@ function val3(){
     const qrt=document.querySelector("input[name='quarto']:checked");
     const qf=document.getElementById("f-quarto"),qe=document.getElementById("e-quarto");
     if(!qrt){qf.classList.add("bad");qe.style.display="block";ok=false;}else{qf.classList.remove("bad");qe.style.display="none";}
-    if(qrt?.value==="Duplo"||qrt?.value==="Triplo"){
+    if(qrt?.value==="Duplo"){
       ["h2nome","h2cargo","h2mun","h2inst"].forEach(id=>{const v=document.getElementById(id).value.trim();setErr(id,!v);if(!v)ok=false;});
       const h2e=document.getElementById("h2email").value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(h2e)){setErr("h2email",true);ok=false;}else setErr("h2email",false);
       const h2t=document.getElementById("h2tel").value.replace(/\D/g,"");setErr("h2tel",h2t.length<10);if(h2t.length<10)ok=false;
-    }
-    if(qrt?.value==="Triplo"){
-      ["h3nome","h3cargo","h3mun","h3inst"].forEach(id=>{const v=document.getElementById(id).value.trim();setErr(id,!v);if(!v)ok=false;});
-      const h3e=document.getElementById("h3email").value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(h3e)){setErr("h3email",true);ok=false;}else setErr("h3email",false);
-      const h3t=document.getElementById("h3tel").value.replace(/\D/g,"");setErr("h3tel",h3t.length<10);if(h3t.length<10)ok=false;
     }
   }
   if(!ok)scrollToFirstError();return ok;
@@ -398,18 +384,12 @@ async function submitForm(){
     "Contato pós-evento":document.querySelector("input[name='contato']:checked")?.value||"",
     Hospedagem:hosp,"Período hospedagem":hosp==="Sim"?(document.querySelector("input[name='periodo']:checked")?.value||""):"",
     "Tipo quarto":hosp==="Sim"?(quarto||""):"",
-    "Hóspede 2 - Nome":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2nome").value.trim().toUpperCase():"",
-    "Hóspede 2 - Cargo":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2cargo").value.trim().toUpperCase():"",
-    "Hóspede 2 - Município":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2mun").value.trim().toUpperCase():"",
-    "Hóspede 2 - Instituição":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2inst").value.trim().toUpperCase():"",
-    "Hóspede 2 - Email":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2email").value.trim().toLowerCase():"",
-    "Hóspede 2 - Telefone":(quarto==="Duplo"||quarto==="Triplo")?document.getElementById("h2tel").value.trim():"",
-    "Hóspede 3 - Nome":quarto==="Triplo"?document.getElementById("h3nome").value.trim().toUpperCase():"",
-    "Hóspede 3 - Cargo":quarto==="Triplo"?document.getElementById("h3cargo").value.trim().toUpperCase():"",
-    "Hóspede 3 - Município":quarto==="Triplo"?document.getElementById("h3mun").value.trim().toUpperCase():"",
-    "Hóspede 3 - Instituição":quarto==="Triplo"?document.getElementById("h3inst").value.trim().toUpperCase():"",
-    "Hóspede 3 - Email":quarto==="Triplo"?document.getElementById("h3email").value.trim().toLowerCase():"",
-    "Hóspede 3 - Telefone":quarto==="Triplo"?document.getElementById("h3tel").value.trim():"",
+    "Hóspede 2 - Nome":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2nome").value.trim().toUpperCase():"",
+    "Hóspede 2 - Cargo":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2cargo").value.trim().toUpperCase():"",
+    "Hóspede 2 - Município":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2mun").value.trim().toUpperCase():"",
+    "Hóspede 2 - Instituição":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2inst").value.trim().toUpperCase():"",
+    "Hóspede 2 - Email":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2email").value.trim().toLowerCase():"",
+    "Hóspede 2 - Telefone":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2tel").value.trim():"",
   };
   const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),30000));
   try{
@@ -433,9 +413,9 @@ ro.observe(document.body);
 notifyHeight();
 
 // ===== Persistência de dados (sessionStorage) =====
-const PERSIST_FIELDS=["nome","email","tel","inst","outro-cargo","h2nome","h2cargo","h2mun","h2inst","h2email","h2tel","h3nome","h3cargo","h3mun","h3inst","h3email","h3tel"];
+const PERSIST_FIELDS=["nome","email","tel","inst","outro-cargo","h2nome","h2cargo","h2mun","h2inst","h2email","h2tel"];
 const PERSIST_SELECTS=["cargo","uf","cidade"];
-const PERSIST_RADIOS=["nucleo","contato","hosp","periodo","quarto"];
+const PERSIST_RADIOS=["visita","contato","hosp","periodo","quarto"];
 
 function saveState(){
   try{
@@ -443,13 +423,13 @@ function saveState(){
     PERSIST_FIELDS.forEach(id=>{const el=document.getElementById(id);if(el)s.fields[id]=el.value;});
     PERSIST_SELECTS.forEach(id=>{const el=document.getElementById(id);if(el)s.selects[id]=el.value;});
     PERSIST_RADIOS.forEach(n=>{const el=document.querySelector("input[name='"+n+"']:checked");if(el)s.radios[n]=el.value;});
-    sessionStorage.setItem("inspira_form",JSON.stringify(s));
+    sessionStorage.setItem("inspira_coruripe_form",JSON.stringify(s));
   }catch(e){}
 }
 
 async function restoreState(){
   try{
-    const raw=sessionStorage.getItem("inspira_form");
+    const raw=sessionStorage.getItem("inspira_coruripe_form");
     if(!raw)return;
     const s=JSON.parse(raw);
     Object.entries(s.fields||{}).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v;});
@@ -503,7 +483,7 @@ const _submitForm=submitForm;
 submitForm=async function(){
   await _submitForm();
   if(document.getElementById("succ").style.display==="block"){
-    try{sessionStorage.removeItem("inspira_form");}catch(e){}
+    try{sessionStorage.removeItem("inspira_coruripe_form");}catch(e){}
   }
 };
 

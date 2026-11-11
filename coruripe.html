@@ -190,7 +190,7 @@ textarea{resize:vertical;min-height:80px}
           <div class="field" id="f-contato"><label class="lbl">Deseja receber contato institucional após o evento? <span class="req">*</span></label><div class="radio-group"><div class="rpill"><input type="radio" name="contato" id="ct1" value="Sim"><label for="ct1">Sim</label></div><div class="rpill"><input type="radio" name="contato" id="ct2" value="Não"><label for="ct2">Não</label></div></div><div class="err-msg" id="e-contato">Selecione uma opção.</div></div>
           <div class="field" id="f-hosp">
             <label class="lbl">Vai precisar de hospedagem? <span class="req">*</span></label>
-            <div class="info-box">Oferecemos hospedagem sem custo para quem vem de municípios distantes de Coruripe. As vagas são limitadas: se o seu município fica próximo e você consegue ir e voltar no mesmo dia, marque Não. Assim garantimos o quarto para quem mais precisa.</div>
+            <div class="info-box">Para maior comodidade dos participantes que vêm de municípios mais distantes, o Instituto Alfa e Beto disponibilizará hospedagem gratuita em Coruripe. Contamos com a colaboração dos participantes dos municípios próximos para que, sempre que possível, optem pelo deslocamento de ida e volta no mesmo dia, permitindo que as vagas de hospedagem sejam destinadas prioritariamente a quem percorre maiores distâncias.</div>
             <div class="radio-group"><div class="rpill"><input type="radio" name="hosp" id="h1" value="Sim" onchange="onHospChange()"><label for="h1">Sim</label></div><div class="rpill"><input type="radio" name="hosp" id="h2" value="Não" onchange="onHospChange()"><label for="h2">Não</label></div></div>
             <div class="err-msg" id="e-hosp">Selecione uma opção.</div>
           </div>
@@ -232,6 +232,55 @@ textarea{resize:vertical;min-height:80px}
 </div>
 <script>
 const WH="https://script.google.com/macros/s/AKfycbx2DUlXfI5snpgkTss3SNIc44_thtI5JXBGmIWsRr9Sea4aClJKN_VHPjKSBo2smZU/exec";
+// ===== Integração RD Station Marketing =====
+// Token PÚBLICO do RD (Configurações > Integrações > Tokens). Enquanto estiver com "__", nada é enviado ao RD.
+const RD_TOKEN="__RD_TOKEN_PUBLICO__";
+const RD_CONVERSAO="inscricao-inspira-coruripe";
+// Identificadores dos campos personalizados criados no RD (cf_...). Campo vazio = não envia.
+const RD_CF={visita:"",contato:"",hosp:"",periodo:"",quarto:"",tipo:""};
+function rdPost(p){
+  const url="https://api.rd.services/platform/conversions?api_key="+encodeURIComponent(RD_TOKEN);
+  const body=JSON.stringify({event_type:"CONVERSION",event_family:"CDP",payload:p});
+  return fetch(url,{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"application/json"},body:body})
+    .then(function(r){if(!r.ok)console.warn("RD: status "+r.status);})
+    .catch(function(e){
+      console.warn("RD: envio direto bloqueado, tentando modo alternativo",e);
+      try{fetch(url,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain"},body:body});}catch(_){}
+    });
+}
+function rdCampos(d,tipo){
+  const o={};
+  const put=function(k,v){if(RD_CF[k]&&v)o[RD_CF[k]]=v;};
+  put("visita",d["Visita às escolas (tarde)"]);
+  put("contato",d["Contato pós-evento"]);
+  put("hosp",d["Hospedagem"]);
+  put("periodo",d["Período hospedagem"]);
+  put("quarto",d["Tipo quarto"]);
+  put("tipo",tipo);
+  return o;
+}
+function rdLimpo(o){Object.keys(o).forEach(function(k){if(o[k]===""||o[k]==null)delete o[k];});return o;}
+function enviarRD(d){
+  try{
+    if(!RD_TOKEN||RD_TOKEN.indexOf("__")===0)return;
+    const titular=rdLimpo(Object.assign({
+      conversion_identifier:RD_CONVERSAO,email:d.Email,name:d.Nome,job_title:d.Cargo,
+      personal_phone:d.Telefone,city:d["Município"],state:d.Estado,country:"Brasil",
+      company_name:d["Instituição"],tags:["inspira-coruripe"],
+      legal_bases:[{category:"communications",type:"consent",status:"granted"}]
+    },rdCampos(d,"Inscrito")));
+    rdPost(titular);
+    if(d["Hóspede 2 - Email"]){
+      const h2=rdLimpo(Object.assign({
+        conversion_identifier:RD_CONVERSAO,email:d["Hóspede 2 - Email"],name:d["Hóspede 2 - Nome"],
+        job_title:d["Hóspede 2 - Cargo"],personal_phone:d["Hóspede 2 - Telefone"],
+        city:d["Hóspede 2 - Município"],state:d.Estado,country:"Brasil",
+        company_name:d["Hóspede 2 - Instituição"],tags:["inspira-coruripe","acompanhante"]
+      },rdCampos(d,"Hóspede 2 (acompanhante de "+d.Nome+")")));
+      rdPost(h2);
+    }
+  }catch(e){console.warn("RD: erro ao montar envio",e);}
+}
 const UF_CODES={AC:12,AL:27,AP:16,AM:13,BA:29,CE:23,DF:53,ES:32,GO:52,MA:21,MT:51,MS:50,MG:31,PA:15,PB:25,PR:41,PE:26,PI:22,RJ:33,RN:24,RS:43,RO:11,RR:14,SC:42,SP:35,SE:28,TO:17};
 let submitting=false;
 
@@ -391,6 +440,7 @@ async function submitForm(){
     "Hóspede 2 - Email":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2email").value.trim().toLowerCase():"",
     "Hóspede 2 - Telefone":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2tel").value.trim():"",
   };
+  enviarRD(payload);
   const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),30000));
   try{
     await Promise.race([fetch(WH,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),timeout]);

@@ -35,8 +35,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .fields{padding:0 28px}.field{margin-bottom:16px}.field:last-child{margin-bottom:0}
 label.lbl{display:block;font-size:12px;font-weight:600;letter-spacing:0.05em;color:var(--blue);text-transform:uppercase;margin-bottom:5px}
 label.lbl .req{color:var(--yellow)}
-input:not([type="checkbox"]):not([type="radio"]),select,textarea{width:100%;padding:10px 12px;font-family:inherit;font-size:14px;color:#1a1a2e;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
-input::placeholder,textarea::placeholder{color:var(--muted);font-size:13px;text-transform:none}
+input:not([type="checkbox"]):not([type="radio"]),select,textarea{width:100%;padding:12px 14px;min-height:48px;font-family:inherit;font-size:16px;color:#1a1a2e;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none}
+input::placeholder,textarea::placeholder{color:var(--muted);font-size:15px;text-transform:none}
 input:focus,select:focus,textarea:focus{border-color:var(--btn);box-shadow:0 0 0 3px rgba(30,136,229,0.12);background:#fff}
 input.uppercase{text-transform:uppercase}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
@@ -45,15 +45,16 @@ textarea{resize:vertical;min-height:80px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;margin-bottom:16px}
 .row2:last-child{margin-bottom:0}
 .row2>.field{margin-bottom:0}
-.err-msg{font-size:12px;color:var(--error);margin-top:4px;display:none}
+.err-msg{font-size:13px;line-height:1.4;color:var(--error);margin-top:4px;display:none}
 .field.bad .err-msg{display:block}
 .field.bad input,.field.bad select,.field.bad textarea{border-color:var(--error)!important}
 .loading-cities{font-size:12px;color:var(--muted);margin-top:4px;display:none}
 .outro-wrap{margin-top:8px;display:none}.outro-wrap.visible{display:block}
-.radio-group{display:flex;gap:8px;flex-wrap:wrap}
+.radio-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .rpill{position:relative}.rpill input{position:absolute;opacity:0;width:0;height:0}
-.rpill label{display:inline-flex;align-items:center;padding:9px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:100px;cursor:pointer;font-size:13px;color:var(--muted);font-weight:400;margin-bottom:0;transition:all .15s;min-height:44px}
-.rpill input:checked+label{background:var(--blue-light);border-color:var(--btn);color:var(--navy);font-weight:600}
+.rpill label{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;padding:10px 12px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:15px;line-height:1.3;color:var(--muted);font-weight:400;margin-bottom:0;transition:all .15s;min-height:50px}
+.rpill input:checked+label{background:var(--blue-light);border-color:var(--btn);color:var(--navy);font-weight:600;box-shadow:inset 0 0 0 1px var(--btn)}
+.rpill input:focus-visible+label{outline:2px solid var(--btn);outline-offset:2px}
 
 
 
@@ -62,33 +63,38 @@ textarea{resize:vertical;min-height:80px}
 
 .check-opt{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s}
 .check-opt:has(input:checked),.check-opt.checked{background:var(--blue-light);border-color:var(--btn)}
-.check-opt input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;margin-top:1px;cursor:pointer;border:2px solid var(--border);border-radius:5px;background:#fff;position:relative;transition:all .2s ease;flex-shrink:0}
+.check-opt input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:22px;height:22px;min-width:22px;margin-top:1px;cursor:pointer;border:2px solid var(--border);border-radius:5px;background:#fff;position:relative;transition:all .2s ease;flex-shrink:0}
 .check-opt input[type="checkbox"]:hover{border-color:var(--btn)}
 .check-opt input[type="checkbox"]:checked{background:var(--btn);border-color:var(--btn);animation:checkpop .3s ease}
-.check-opt input[type="checkbox"]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);animation:checkmark .25s ease .05s forwards}
+.check-opt input[type="checkbox"]:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);animation:checkmark .25s ease .05s forwards}
 @keyframes checkpop{0%{transform:scale(1)}40%{transform:scale(0.85)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes checkmark{from{transform:rotate(45deg) scale(0)}to{transform:rotate(45deg) scale(1)}}
 .link-politica{color:var(--btn);font-weight:600;text-decoration:underline;text-underline-offset:2px}
-.check-opt label{font-size:13px;color:var(--muted);line-height:1.5;cursor:pointer}
+.check-opt label{font-size:14px;color:var(--muted);line-height:1.55;cursor:pointer}
 .check-opt:has(input:checked) label,.check-opt.checked label{color:var(--navy)}
 .progress-wrap{padding:14px 28px 0}
 .progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
 .progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:var(--yellow);border-radius:2px;transition:width .3s}
 .nav-area{padding:20px 28px 0;display:flex;gap:10px}
-.btn-back{flex:0 0 auto;padding:12px 20px;background:transparent;color:var(--navy);font-family:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s}
+.btn-back{flex:0 0 auto;min-height:52px;padding:12px 22px;background:transparent;color:var(--navy);font-family:inherit;font-size:15px;font-weight:600;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s}
 .btn-back:hover{border-color:var(--navy);background:var(--blue-light)}
-.btn-next{flex:1;padding:13px;background:var(--navy);color:#fff;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border:none;border-radius:var(--radius);cursor:pointer;transition:background .15s;position:relative;overflow:hidden}
+.btn-next{flex:1;min-height:52px;padding:13px;background:var(--navy);color:#fff;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border:none;border-radius:var(--radius);cursor:pointer;transition:background .15s;position:relative;overflow:hidden}
 .btn-next::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--yellow)}
 .btn-next:hover:not(:disabled){background:var(--btn-h)}.btn-next:disabled{opacity:.6;cursor:not-allowed}
 .timeout-msg{font-size:13px;color:var(--error);text-align:center;margin-top:12px;display:none;padding:0 28px}
-.footer-note{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;padding:0 28px}
-.info-box{background:var(--blue-light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;font-size:12px;color:var(--blue);line-height:1.5;margin-bottom:14px}
-.resumo-bloco{position:relative;padding:12px 70px 12px 0;border-bottom:1px solid rgba(21,101,192,0.15)}
-.resumo-bloco:first-child{padding-top:0}
-.resumo-bloco:first-child .btn-edit{top:0}
-.resumo-bloco:last-child{border-bottom:none;padding-bottom:0}
-.btn-edit{position:absolute;right:0;top:12px;font-size:11px;font-weight:600;color:var(--btn);background:#fff;border:1px solid var(--btn);border-radius:100px;padding:4px 12px;cursor:pointer;transition:all .15s;line-height:1}
+.footer-note{font-size:13px;color:var(--muted);text-align:center;margin-top:18px;padding:0 28px;line-height:1.7}
+.footer-note a{color:var(--blue);text-decoration:none;font-weight:600;white-space:nowrap}
+.info-box{background:var(--blue-light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;font-size:13px;color:var(--blue);line-height:1.55;margin-bottom:12px}
+.rb{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.rb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--blue-light);border-bottom:1px solid var(--border)}
+.rb-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy)}
+.rb-row{padding:9px 14px;border-bottom:1px solid #EEF2F9}
+.rb-row:last-child{border-bottom:none}
+.rb-k{display:block;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.rb-v{display:block;font-size:15px;color:#1a1a2e;line-height:1.4;overflow-wrap:anywhere}
+.rb-sub{padding:8px 14px 4px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);border-top:1px solid var(--border);background:#FAFBFE}
+.btn-edit{flex:0 0 auto;min-height:36px;font-size:13px;font-weight:600;color:var(--btn);background:#fff;border:1.5px solid var(--btn);border-radius:100px;padding:6px 16px;cursor:pointer;transition:all .15s;line-height:1;font-family:inherit}
 .btn-edit:hover{background:var(--btn);color:#fff}
 .char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}
 .hospede-divider{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);padding:10px 0 6px;border-bottom:2px solid var(--blue-light);margin-bottom:14px}
@@ -99,11 +105,19 @@ textarea{resize:vertical;min-height:80px}
 .success{display:none;text-align:center;padding:48px 28px}
 .sicon{width:60px;height:60px;border-radius:50%;background:var(--blue-light);border:2px solid var(--btn);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
 .stitle{font-size:22px;font-weight:600;color:var(--navy);margin-bottom:8px}
-.ssub{font-size:14px;color:var(--muted);line-height:1.6}
+.ssub{font-size:15px;color:var(--muted);line-height:1.6}
 @media(max-width:480px){
+  body{padding:0 0 32px}
+  .top{border-radius:0}
+  .card{border-left:none;border-right:none;border-radius:0}
   .row2{grid-template-columns:1fr}
+  .top-sub{font-size:14px}
+  .sec-header{margin-bottom:18px}
+  .sec-desc,.sec-header.destaque .sec-desc{font-size:14px}
+  .progress-info{font-size:12px}
   .fields,.nav-area,.progress-wrap{padding-left:16px;padding-right:16px}
-  .sec-header{padding:10px 16px}
+  .sec-header{padding:12px 16px}
+  .sec-header.destaque{padding:14px 16px 16px}
   .top-navy{padding:22px 20px 26px}
   .top-logos .logo-iab{height:40px}
   .top-logos .logo-inspira{height:40px}
@@ -199,7 +213,7 @@ textarea{resize:vertical;min-height:80px}
           </div>
           <div id="hosp-detalhes" style="display:none">
             <div class="field" id="f-periodo"><label class="lbl">Período de hospedagem <span class="req">*</span></label><div class="radio-group"><div class="rpill"><input type="radio" name="periodo" id="per1" value="10 a 11 de dezembro"><label for="per1">10 a 11 de dezembro</label></div><div class="rpill"><input type="radio" name="periodo" id="per2" value="11 a 12 de dezembro"><label for="per2">11 a 12 de dezembro</label></div></div><div class="err-msg" id="e-periodo">Selecione o período.</div></div>
-            <div class="field" id="f-quarto"><label class="lbl">Tipo de acomodação <span class="req">*</span></label><div class="info-box" style="font-size:11px">Você já é o 1º hóspede. Para quarto duplo, preencha apenas os dados do 2º hóspede. Nossa equipe entrará em contato para organizar a hospedagem conforme a disponibilidade.</div><div class="radio-group"><div class="rpill"><input type="radio" name="quarto" id="q1" value="Individual" onchange="onQuartoChange()"><label for="q1">Individual</label></div><div class="rpill"><input type="radio" name="quarto" id="q2" value="Duplo" onchange="onQuartoChange()"><label for="q2">Duplo</label></div></div><div class="err-msg" id="e-quarto">Selecione o tipo de acomodação.</div></div>
+            <div class="field" id="f-quarto"><label class="lbl">Tipo de acomodação <span class="req">*</span></label><div class="info-box">Você já é o 1º hóspede. Para quarto duplo, preencha apenas os dados do 2º hóspede. Nossa equipe entrará em contato para organizar a hospedagem conforme a disponibilidade.</div><div class="radio-group"><div class="rpill"><input type="radio" name="quarto" id="q1" value="Individual" onchange="onQuartoChange()"><label for="q1">Individual</label></div><div class="rpill"><input type="radio" name="quarto" id="q2" value="Duplo" onchange="onQuartoChange()"><label for="q2">Duplo</label></div></div><div class="err-msg" id="e-quarto">Selecione o tipo de acomodação.</div></div>
             <div id="hosp2-wrap" style="display:none">
               <div class="hospede-divider">Acompanhante: Hóspede 2</div>
               <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
@@ -223,19 +237,19 @@ textarea{resize:vertical;min-height:80px}
       <div class="section" id="sec4">
         <div class="sec-header"><div class="sec-title">Confirmação da inscrição</div><div class="sec-desc">Revise seus dados antes de finalizar. Após o envio não será possível alterar.</div></div>
         <div class="fields">
-          <div class="info-box" id="resumo" style="font-size:13px;line-height:1.9"></div>
+          <div id="resumo"></div>
           <div class="field" id="f-aceite" style="margin-top:16px"><div class="check-opt"><input type="checkbox" id="aceite"><label for="aceite">Declaro que as informações são verdadeiras e autorizo o uso dos meus dados para fins de organização do evento e comunicação institucional relacionada ao Inspira Coruripe, conforme a <a href="https://www.alfaebeto.org.br/politica-de-privacidade/" target="_blank" rel="noopener" class="link-politica">Política de Privacidade</a> do Instituto Alfa e Beto.</label></div><div class="err-msg" id="e-aceite">Você precisa aceitar os termos para concluir a inscrição.</div></div>
         </div>
         <div class="nav-area"><button class="btn-back" onclick="goTo(3)">Voltar</button><button class="btn-next" id="sbtn" onclick="submitForm()">Confirmar inscrição</button></div>
         <div class="timeout-msg" id="timeout-msg">O servidor está demorando. Sua inscrição pode ter sido registrada. Aguarde alguns instantes antes de tentar novamente.</div>
-        <p class="footer-note">Dúvidas: eventos@alfaebeto.org.br · <a href="https://wa.me/5511917322699" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:600">WhatsApp (11) 91732-2699</a></p>
+        <p class="footer-note">Dúvidas?<br><a href="mailto:eventos@alfaebeto.org.br">eventos@alfaebeto.org.br</a><br><a href="https://wa.me/5511917322699" target="_blank" rel="noopener">WhatsApp (11) 91732-2699</a></p>
       </div>
 
     </div>
     <div class="success" id="succ">
       <div class="sicon"><svg width="26" height="26" fill="none" stroke="#1E88E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div class="stitle">Inscrição recebida!</div>
-      <p class="ssub">Ficamos felizes com o seu interesse em participar do Inspira Coruripe.<br><br>Em breve nossa equipe entrará em contato para confirmar sua participação.<br><br>Dúvidas: <strong>eventos@alfaebeto.org.br</strong> · (11) 91732-2699</p>
+      <p class="ssub">Ficamos felizes com o seu interesse em participar do Inspira Coruripe.<br><br>Em breve nossa equipe entrará em contato para confirmar sua participação.</p><p class="footer-note" style="margin-top:24px">Dúvidas?<br><a href="mailto:eventos@alfaebeto.org.br">eventos@alfaebeto.org.br</a><br><a href="https://wa.me/5511917322699" target="_blank" rel="noopener">WhatsApp (11) 91732-2699</a></p>
     </div>
   </div>
 </div>
@@ -421,19 +435,32 @@ function val3(){
   if(!ok)scrollToFirstError();return ok;
 }
 function next(sec){const valid=sec===1?val1():sec===2?val2():sec===3?val3():true;if(!valid)return;goTo(sec+1);}
+function escH(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function rbRow(k,v){return '<div class="rb-row"><span class="rb-k">'+k+'</span><span class="rb-v">'+(escH(v)||"-")+"</span></div>";}
+function rbBloco(titulo,sec,linhas){return '<div class="rb"><div class="rb-head"><span class="rb-title">'+titulo+'</span><button type="button" class="btn-edit" onclick="goTo('+sec+')">Editar</button></div>'+linhas+"</div>";}
 function buildResumo(){
-  const cargo=document.getElementById("cargo").value;
-  const cargoFinal=cargo==="Outro"?"Outro: "+document.getElementById("outro-cargo").value.trim().toUpperCase():cargo;
+  const g=id=>document.getElementById(id).value.trim();
+  const cargo=g("cargo");
+  const cargoFinal=cargo==="Outro"?"Outro: "+g("outro-cargo").toUpperCase():cargo;
   const visita=document.querySelector("input[name='visita']:checked")?.value||"-";
+  const contato=document.querySelector("input[name='contato']:checked")?.value||"-";
   const hosp=document.querySelector("input[name='hosp']:checked")?.value||"Não";
   const quarto=document.querySelector("input[name='quarto']:checked")?.value||"-";
   const periodo=document.querySelector("input[name='periodo']:checked")?.value||"-";
-  let h='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(1)">Editar</button><strong>'+document.getElementById("nome").value.trim().toUpperCase()+"</strong><br>"+cargoFinal+" · "+document.getElementById("inst").value.trim().toUpperCase()+"<br>"+document.getElementById("cidade").value+", "+document.getElementById("uf").value+"<br>"+document.getElementById("email").value.trim()+" · "+document.getElementById("tel").value+"</div>";
-  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(2)">Editar</button><strong>Visita às escolas:</strong> '+visita+"</div>";
-  h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(3)">Editar</button><strong>Contato pós-evento:</strong> '+(document.querySelector("input[name=\'contato\']:checked")?.value||"-")+"<br><strong>Hospedagem:</strong> "+hosp;
-  if(hosp==="Sim")h+=" · "+quarto+" · "+periodo;
-  if(hosp==="Sim"&&quarto==="Duplo")h+="<br><strong>Hóspede 2:</strong> "+document.getElementById("h2nome").value.trim().toUpperCase()+" · "+h2CargoFinal()+" · "+document.getElementById("h2cidade").value+", "+document.getElementById("h2uf").value;
-  h+="</div>";
+  let h=rbBloco("Seus dados",1,
+    rbRow("Nome",g("nome").toUpperCase())+rbRow("Cargo",cargoFinal)+rbRow("Instituição",g("inst").toUpperCase())+
+    rbRow("Município",g("cidade")+" / "+g("uf"))+rbRow("E-mail",g("email").toLowerCase())+rbRow("Telefone",g("tel")));
+  h+=rbBloco("Visita às escolas",2,rbRow("Vai participar à tarde?",visita));
+  let l3=rbRow("Contato pós-evento",contato)+rbRow("Hospedagem",hosp);
+  if(hosp==="Sim"){
+    l3+=rbRow("Período",periodo)+rbRow("Acomodação",quarto);
+    if(quarto==="Duplo"){
+      l3+='<div class="rb-sub">Hóspede 2</div>'+rbRow("Nome",g("h2nome").toUpperCase())+rbRow("Cargo",h2CargoFinal())+
+        rbRow("Instituição",g("h2inst").toUpperCase())+rbRow("Município",g("h2cidade")+" / "+g("h2uf"))+
+        rbRow("E-mail",g("h2email").toLowerCase())+rbRow("Telefone",g("h2tel"));
+    }
+  }
+  h+=rbBloco("Contato e hospedagem",3,l3);
   document.getElementById("resumo").innerHTML=h;
 }
 

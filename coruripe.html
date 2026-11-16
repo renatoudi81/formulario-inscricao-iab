@@ -42,7 +42,9 @@ input.uppercase{text-transform:uppercase}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
 select:disabled{opacity:.4;cursor:not-allowed}
 textarea{resize:vertical;min-height:80px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;margin-bottom:16px}
+.row2:last-child{margin-bottom:0}
+.row2>.field{margin-bottom:0}
 .err-msg{font-size:12px;color:var(--error);margin-top:4px;display:none}
 .field.bad .err-msg{display:block}
 .field.bad input,.field.bad select,.field.bad textarea{border-color:var(--error)!important}
@@ -201,8 +203,14 @@ textarea{resize:vertical;min-height:80px}
               <div class="hospede-divider">Acompanhante: Hóspede 2</div>
               <div class="info-box" style="font-size:12px">Favor inserir os dados de pessoas da área de Educação.</div>
               <div class="field" id="f-h2nome"><label class="lbl">Nome completo <span class="req">*</span></label><input type="text" id="h2nome" class="uppercase" placeholder="Nome completo"><div class="err-msg">Informe o nome.</div></div>
-              <div class="field" id="f-h2cargo"><label class="lbl">Cargo <span class="req">*</span></label><input type="text" id="h2cargo" class="uppercase" placeholder="Cargo"><div class="err-msg">Informe o cargo.</div></div>
-              <div class="row2"><div class="field" id="f-h2mun"><label class="lbl">Município <span class="req">*</span></label><input type="text" id="h2mun" class="uppercase" placeholder="Município"><div class="err-msg">Informe o município.</div></div><div class="field" id="f-h2inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h2inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div></div>
+              <div class="field" id="f-h2cargo"><label class="lbl">Cargo <span class="req">*</span></label><select id="h2cargo" onchange="toggleOutroCargoH2()">
+              <option value="">Selecione o cargo</option>
+              <option>Prefeito(a)</option><option>Secretário(a) Municipal de Educação</option><option>Gestor(a) público(a)</option><option>Equipe técnica da Secretaria</option><option>Diretor(a) escolar</option><option>Coordenador(a) pedagógico(a)</option><option>Professor(a)</option><option value="Outro">Outro</option>
+            </select><div class="outro-wrap" id="h2-outro-cargo-wrap"><input type="text" id="h2-outro-cargo" class="uppercase" placeholder="Informe o cargo" style="margin-top:8px"></div><div class="err-msg">Informe o cargo.</div></div>
+              <div class="row2"><div class="field" id="f-h2uf"><label class="lbl">Estado <span class="req">*</span></label><select id="h2uf" onchange="loadCidades(this.value,'h2cidade','h2-loading-cities')">
+                <option value="">Selecione</option>
+                <option value="AC">Acre</option><option value="AL">Alagoas</option><option value="AP">Amapá</option><option value="AM">Amazonas</option><option value="BA">Bahia</option><option value="CE">Ceará</option><option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option><option value="GO">Goiás</option><option value="MA">Maranhão</option><option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option><option value="MG">Minas Gerais</option><option value="PA">Pará</option><option value="PB">Paraíba</option><option value="PR">Paraná</option><option value="PE">Pernambuco</option><option value="PI">Piauí</option><option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option><option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option><option value="RR">Roraima</option><option value="SC">Santa Catarina</option><option value="SP">São Paulo</option><option value="SE">Sergipe</option><option value="TO">Tocantins</option>
+              </select><div class="err-msg">Selecione o estado.</div></div><div class="field" id="f-h2cidade"><label class="lbl">Município <span class="req">*</span></label><select id="h2cidade" disabled><option value="">Selecione o estado primeiro</option></select><div class="loading-cities" id="h2-loading-cities">Carregando municípios...</div><div class="err-msg">Selecione o município.</div></div></div><div class="field" id="f-h2inst"><label class="lbl">Instituição <span class="req">*</span></label><input type="text" id="h2inst" class="uppercase" placeholder="Instituição"><div class="err-msg">Informe a instituição.</div></div>
               <div class="row2"><div class="field" id="f-h2email"><label class="lbl">E-mail <span class="req">*</span></label><input type="email" id="h2email" placeholder="email@exemplo.com" inputmode="email"><div class="err-msg">Informe o e-mail.</div></div><div class="field" id="f-h2tel"><label class="lbl">Telefone <span class="req">*</span></label><input type="tel" id="h2tel" placeholder="(00) 00000-0000" inputmode="numeric"><div class="err-msg">Informe o telefone.</div></div></div>
             </div>
             
@@ -281,11 +289,11 @@ function enviarRD(d){
     if(d["Hóspede 2 - Email"]){
       const baseH={conversion_identifier:RD_CONVERSAO,email:d["Hóspede 2 - Email"],name:d["Hóspede 2 - Nome"],
         job_title:d["Hóspede 2 - Cargo"],personal_phone:d["Hóspede 2 - Telefone"],
-        city:d["Hóspede 2 - Município"],state:d.Estado,country:"Brasil",
+        city:d["Hóspede 2 - Município"],state:d["Hóspede 2 - Estado"]||d.Estado,country:"Brasil",
         company_name:d["Hóspede 2 - Instituição"],tags:["inspira-coruripe","acompanhante"]};
       const h2=Object.assign({},baseH,{
         cf_municipio:d["Hóspede 2 - Município"],cf_instituicao_secretaria:d["Hóspede 2 - Instituição"],
-        cf_telefone_whatsapp:d["Hóspede 2 - Telefone"],cf_estado_uf:d.Estado
+        cf_telefone_whatsapp:d["Hóspede 2 - Telefone"],cf_estado_uf:d["Hóspede 2 - Estado"]||d.Estado
       });
       rdPost(rdLimpo(rdHosp(d,h2)),rdLimpo(Object.assign({},baseH)));
     }
@@ -318,8 +326,8 @@ function maskTel(el){
 document.getElementById("email").addEventListener("keydown",function(e){if(e.key===" ")e.preventDefault()});
 document.getElementById("email").addEventListener("paste",function(e){e.preventDefault();this.value=(e.clipboardData||window.clipboardData).getData("text").replace(/\s/g,"")});
 
-async function loadCidades(uf){
-  const sel=document.getElementById("cidade"),loading=document.getElementById("loading-cities");
+async function loadCidades(uf,selId,loadId){
+  const sel=document.getElementById(selId||"cidade"),loading=document.getElementById(loadId||"loading-cities");
   sel.disabled=true;sel.innerHTML="<option value=''>Carregando...</option>";loading.style.display="block";
   if(!uf){sel.innerHTML="<option value=''>Selecione o estado primeiro</option>";loading.style.display="none";return;}
   try{
@@ -341,9 +349,20 @@ function onHospChange(){
   document.getElementById("hosp-detalhes").style.display=v==="Sim"?"block":"none";
   if(v!=="Sim"){
     document.querySelectorAll("input[name='periodo'],input[name='quarto']").forEach(r=>r.checked=false);
-    ["h2nome","h2cargo","h2mun","h2inst","h2email","h2tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+    ["h2nome","h2cargo","h2-outro-cargo","h2uf","h2inst","h2email","h2tel"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+    document.getElementById("h2-outro-cargo-wrap").classList.remove("visible");
+    const h2c=document.getElementById("h2cidade");h2c.innerHTML="<option value=''>Selecione o estado primeiro</option>";h2c.disabled=true;
     document.getElementById("hosp2-wrap").style.display="none";
   }
+}
+function toggleOutroCargoH2(){
+  const v=document.getElementById("h2cargo").value;
+  document.getElementById("h2-outro-cargo-wrap").classList.toggle("visible",v==="Outro");
+  if(v!=="Outro")document.getElementById("h2-outro-cargo").value="";
+}
+function h2CargoFinal(){
+  const v=document.getElementById("h2cargo").value;
+  return v==="Outro"?"Outro: "+document.getElementById("h2-outro-cargo").value.trim().toUpperCase():v;
 }
 function onQuartoChange(){
   const v=document.querySelector("input[name='quarto']:checked")?.value;
@@ -392,7 +411,8 @@ function val3(){
     const qf=document.getElementById("f-quarto"),qe=document.getElementById("e-quarto");
     if(!qrt){qf.classList.add("bad");qe.style.display="block";ok=false;}else{qf.classList.remove("bad");qe.style.display="none";}
     if(qrt?.value==="Duplo"){
-      ["h2nome","h2cargo","h2mun","h2inst"].forEach(id=>{const v=document.getElementById(id).value.trim();setErr(id,!v);if(!v)ok=false;});
+      ["h2nome","h2cargo","h2uf","h2cidade","h2inst"].forEach(id=>{const v=document.getElementById(id).value.trim();setErr(id,!v);if(!v)ok=false;});
+      if(document.getElementById("h2cargo").value==="Outro"&&!document.getElementById("h2-outro-cargo").value.trim()){setErr("h2cargo",true);ok=false;}
       const h2e=document.getElementById("h2email").value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(h2e)){setErr("h2email",true);ok=false;}else setErr("h2email",false);
       const h2t=document.getElementById("h2tel").value.replace(/\D/g,"");setErr("h2tel",h2t.length<10);if(h2t.length<10)ok=false;
     }
@@ -411,6 +431,7 @@ function buildResumo(){
   h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(2)">Editar</button><strong>Visita às escolas:</strong> '+visita+"</div>";
   h+='<div class="resumo-bloco"><button class="btn-edit" onclick="goTo(3)">Editar</button><strong>Contato pós-evento:</strong> '+(document.querySelector("input[name=\'contato\']:checked")?.value||"-")+"<br><strong>Hospedagem:</strong> "+hosp;
   if(hosp==="Sim")h+=" · "+quarto+" · "+periodo;
+  if(hosp==="Sim"&&quarto==="Duplo")h+="<br><strong>Hóspede 2:</strong> "+document.getElementById("h2nome").value.trim().toUpperCase()+" · "+h2CargoFinal()+" · "+document.getElementById("h2cidade").value+", "+document.getElementById("h2uf").value;
   h+="</div>";
   document.getElementById("resumo").innerHTML=h;
 }
@@ -444,8 +465,9 @@ async function submitForm(){
     Hospedagem:hosp,"Período hospedagem":hosp==="Sim"?(document.querySelector("input[name='periodo']:checked")?.value||""):"",
     "Tipo quarto":hosp==="Sim"?(quarto||""):"",
     "Hóspede 2 - Nome":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2nome").value.trim().toUpperCase():"",
-    "Hóspede 2 - Cargo":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2cargo").value.trim().toUpperCase():"",
-    "Hóspede 2 - Município":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2mun").value.trim().toUpperCase():"",
+    "Hóspede 2 - Cargo":(hosp==="Sim"&&quarto==="Duplo")?h2CargoFinal():"",
+    "Hóspede 2 - Estado":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2uf").value:"",
+    "Hóspede 2 - Município":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2cidade").value:"",
     "Hóspede 2 - Instituição":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2inst").value.trim().toUpperCase():"",
     "Hóspede 2 - Email":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2email").value.trim().toLowerCase():"",
     "Hóspede 2 - Telefone":(hosp==="Sim"&&quarto==="Duplo")?document.getElementById("h2tel").value.trim():"",
@@ -473,8 +495,8 @@ ro.observe(document.body);
 notifyHeight();
 
 // ===== Persistência de dados (sessionStorage) =====
-const PERSIST_FIELDS=["nome","email","tel","inst","outro-cargo","h2nome","h2cargo","h2mun","h2inst","h2email","h2tel"];
-const PERSIST_SELECTS=["cargo","uf","cidade"];
+const PERSIST_FIELDS=["nome","email","tel","inst","outro-cargo","h2nome","h2-outro-cargo","h2inst","h2email","h2tel"];
+const PERSIST_SELECTS=["cargo","uf","cidade","h2cargo","h2uf","h2cidade"];
 const PERSIST_RADIOS=["visita","contato","hosp","periodo","quarto"];
 
 function saveState(){
@@ -498,6 +520,12 @@ async function restoreState(){
       document.getElementById("uf").value=s.selects.uf;
       await loadCidades(s.selects.uf);
       if(s.selects?.cidade)document.getElementById("cidade").value=s.selects.cidade;
+    }
+    if(s.selects?.h2cargo){document.getElementById("h2cargo").value=s.selects.h2cargo;toggleOutroCargoH2();if(s.fields?.["h2-outro-cargo"])document.getElementById("h2-outro-cargo").value=s.fields["h2-outro-cargo"];}
+    if(s.selects?.h2uf){
+      document.getElementById("h2uf").value=s.selects.h2uf;
+      await loadCidades(s.selects.h2uf,"h2cidade","h2-loading-cities");
+      if(s.selects?.h2cidade)document.getElementById("h2cidade").value=s.selects.h2cidade;
     }
     Object.entries(s.radios||{}).forEach(([n,v])=>{
       const el=document.querySelector("input[name='"+n+"'][value='"+v+"']");

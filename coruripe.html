@@ -197,8 +197,23 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 
   .fields,.nav-area{padding-left:18px;padding-right:18px}
 }
 </style>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1357308231321958');
+fbq('track', 'PageView');
+</script>
 </head>
 <body>
+<noscript>
+  <img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1357308231321958&ev=PageView&noscript=1">
+</noscript>
 <div class="wrap">
   <div class="top">
     <div class="top-navy">
@@ -575,6 +590,7 @@ async function submitForm(){
   try{
     await Promise.race([fetch(WH,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}),timeout]);
     document.getElementById("fc").style.display="none";document.getElementById("succ").style.display="block";
+    try{if(window.fbq){fbq('track','Lead',{content_name:'Inspira Coruripe 2026'});}}catch(e){}
   }catch(e){
     submitting=false;btn.disabled=false;btn.textContent="Confirmar inscrição";
     if(e.message==="timeout")document.getElementById("timeout-msg").style.display="block";
